@@ -23,13 +23,13 @@ def validate_empty_email_and_password():
         password_input = driver.find_element(By.NAME, 'password')
 
         # Type email and password quickly
-        email_input.send_keys('example@mail.com')
+        email_input.send_keys('example@gmail.com')
         password_input.send_keys('123456')
 
         time.sleep(1)
 
         # Delete the email and password slowly, one character at a time
-        delete_slowly(email_input, len('example@mail.com'))
+        delete_slowly(email_input, len('example@gmail.com'))
         delete_slowly(password_input, len('123456'))
 
         time.sleep(2)
@@ -45,7 +45,7 @@ def validate_empty_email_and_password():
     except Exception as e:
         print(f"An error occurred: {e}")
     finally:
-        time.sleep(2)
+        time.sleep(3)
         driver.quit()
 
 validate_empty_email_and_password()
