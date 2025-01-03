@@ -19,7 +19,7 @@ def login_jubelio(username, password):
         driver.find_element(By.NAME, 'email').send_keys(username)
         driver.find_element(By.NAME, 'password').send_keys(password)
         driver.find_element(By.XPATH, "//button[@type='submit']").click()
-        time.sleep(10)
+        time.sleep(2)
         if driver.current_url == "https://app2.jubelio.com/home/getting-started":
             print("Login successful!")
         else:
@@ -30,13 +30,17 @@ def login_jubelio(username, password):
 def search_product(product_name):
     try:
         driver.get('https://app2.jubelio.com/home/inventory')
-        time.sleep(5)
+        time.sleep(1)
         search_input = driver.find_element(By.XPATH, "//input[@type='text']")  # Adjust XPath if necessary
         search_input.clear()
         search_input.send_keys(product_name)
         search_input.send_keys(Keys.RETURN)
-        time.sleep(3)
-        products = driver.find_elements(By.XPATH, f"//td[contains(text(), '{product_name}')]")
+        time.sleep(1)
+        
+        # Find the div with class 'react-grid-Canvas' and search within it
+        product_grid = driver.find_element(By.CLASS_NAME, 'react-grid-Canvas')
+        products = product_grid.find_elements(By.XPATH, f".//*[contains(text(), '{product_name}')]")
+        
         if products:
             print(f"Product '{product_name}' found!")
         else:
@@ -48,7 +52,7 @@ def main():
     login_jubelio(email, password)
     search_product('Nutrimax')
     search_product('Blackmores')
-    time.sleep(5)
+    time.sleep(2)
     driver.quit()
 
 main()
